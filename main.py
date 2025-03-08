@@ -29,11 +29,35 @@ def draw():
         screen.draw.text(str(num),(sat.pos[0],sat.pos[1] + 20))
         sat.draw()
         num = num + 1
+    
+    for line in lines:
+        screen.draw.line(line[0],line[1],(255,255,255))
+    
+    if current_sat < total_sat:
+        total_time = time() - start_time
+        screen.draw.text(str(round(total_time,1)), (10,10), fontsize = 30)
+    
+    else:
+        screen.draw.text(str(round(total_time,1)), (10,10), fontsize = 30)
 
 def update():
     pass
 
-
+def on_mouse_down(pos):
+    global current_sat,lines
+    if current_sat < total_sat:
+        if sats[current_sat].collidepoint(pos):
+            if current_sat:
+                lines.append(
+                    (
+                        sats[current_sat-1].pos,
+                        sats[current_sat].pos
+                    )
+                )
+            current_sat = current_sat + 1
+        else:
+            lines = []
+            current_sat = 0
 
 
 
